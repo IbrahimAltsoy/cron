@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\cron.Application\cron.Application.csproj" />
     <ProjectReference Include="..\cron.Domain\cron.Domain.csproj" />
   </ItemGroup>
 
