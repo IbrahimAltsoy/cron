@@ -2,9 +2,7 @@
 using cron.Application.Repositories.Blog;
 using cron.Domain.Entities;
 using cron.Persistance.Context;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace cron.Api.Controllers
 {
@@ -41,10 +39,29 @@ namespace cron.Api.Controllers
             return BadRequest(ModelState);           
         }
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int page = 1, int pageSize = 6)
         {
-           
-            return Ok();
+            var query = await _blogReadRepository.GetAllAsync(true);
+            var totalBlogCount = query.Count();
+
+            var blogs = query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(b => new BlogViewModel
+                {
+                    Content = b.Content,
+                    ImageUrl = b.ImageUrl,
+                    CreatedDate = b.CreatedDate,
+                })
+                .ToList();
+
+            var result = new
+            {
+                TotalBlogCount = totalBlogCount,
+                Blogs = blogs
+            };
+
+            return Ok(result);
         }
     }
 }
