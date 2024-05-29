@@ -1,4 +1,4 @@
-﻿using cron.Api.Models;
+﻿using cron.Application.DTOs.Blog;
 using cron.Application.Repositories.Blog;
 using cron.Domain.Entities;
 using cron.Persistance.Context;
@@ -22,7 +22,7 @@ namespace cron.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] BlogViewModel model)
+        public async Task<IActionResult> Post([FromBody] BlogDto model)
         {
             if (ModelState.IsValid)
             {
@@ -47,7 +47,7 @@ namespace cron.Api.Controllers
             var blogs = query
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .Select(b => new BlogViewModel
+                .Select(b => new BlogDto
                 {
                     Content = b.Content,
                     ImageUrl = b.ImageUrl,

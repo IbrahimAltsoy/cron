@@ -1,6 +1,6 @@
-﻿namespace cron.Api.Models
+﻿namespace cron.Application.DTOs.Blog
 {
-    public class BlogViewModel
+    public class BlogDto
     {
         public string Content { get; set; }
         public string ImageUrl { get; set; }
